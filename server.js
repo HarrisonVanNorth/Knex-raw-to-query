@@ -9,10 +9,10 @@ const port = process.env.PORT || 8000;
 app.use(bodyParser.json());
 
 //select all
-app.get('/', function (req, res) {
-    knex.raw("SELECT * FROM posts").then((result) => {
-            res.json(result.rows)
-        })
+app.get('/', (req, res) => {
+    knex('posts').then((results) => {
+        res.json(results)
+    })
         .catch((err) => {
             console.error(err)
         });
@@ -20,17 +20,23 @@ app.get('/', function (req, res) {
 
 //create row
 app.post('/create', (req, res) => {
-    knex.raw(`INSERT INTO posts (content, author, upvotes) VALUES ('${req.body.content}','${req.body.author}',${req.body.upvotes});`).then((results) => {
+    knex('posts').insert({
+        content: req.body.content,
+        author: req.body.author,
+        upvotes: req.body.upvotes
+    })
+        .then((results) => {
             res.send('created')
         })
         .catch((err) => {
             console.error(err)
-        });
+        })
 });
 
 //get by id
 app.get('/:id', (req, res) => {
-    knex.raw(`SELECT * FROM posts WHERE posts.id = ${req.params.id}`).then((results) => {
+    knex('posts').where('id', req.params.id)
+        .then((results) => {
             res.json(results)
         })
         .catch((err) => {
@@ -40,18 +46,23 @@ app.get('/:id', (req, res) => {
 
 //update by id
 app.patch('/:id', (req, res) => {
-    knex.raw(`UPDATE posts SET content = '${req.body.content}' , author = '${req.body.author}' , upvotes = ${req.body.upvotes}
-    WHERE posts.id = ${req.params.id}`).then((results) => {
-    res.send('updated')
+    knex('posts').where('id', req.params.id).update({
+        content: req.body.content,
+        author: req.body.author,
+        upvotes: req.body.upvotes
     })
-    .catch((err) => {
-        console.error(err)
-    });
+        .then((results) => {
+            res.send('updated')
+        })
+        .catch((err) => {
+            console.error(err)
+        });
 });
 
 //delete by id
 app.delete('/delete/:id', (req, res) => {
-    knex.raw(`DELETE FROM posts WHERE posts.id = ${req.params.id};`).then((results) => {
+    knex('posts').where('id', req.params.id).del()
+        .then((results) => {
             res.send('deleted')
         })
         .catch((err) => {
