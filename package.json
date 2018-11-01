@@ -1,0 +1,28 @@
+{
+  "name": "knex-raw-assignment",
+  "version": "1.0.0",
+  "description": "For this assignment you'll need to create everything from scratch. Use the project we gave you in the previous lesson as a template if you get stuck!",
+  "main": "knexfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarrisonVanNorth/knex-raw-assignment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HarrisonVanNorth/knex-raw-assignment/issues"
+  },
+  "homepage": "https://github.com/HarrisonVanNorth/knex-raw-assignment#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "knex": "^0.15.2",
+    "path": "^0.12.7",
+    "pg": "^7.6.0"
+  }
+}
